@@ -3,7 +3,7 @@
 # default directory list on WD net drive
 # If later refresh, use wddir_new.php (created by Python code)
 --> 
-<b>Choose the folder you like to analysize...</b>
+<b>Choose the folder you like to analysize...</b><br><br>
 <input type="radio" name="folder" value="photos">photos
 <input type="radio" name="folder" value="data">data
 <input type="radio" name="folder" value="music">music
