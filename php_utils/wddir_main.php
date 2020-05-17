@@ -1,6 +1,7 @@
 <html>
 <body>
 <?php
+require 'common.php'; // for test_input function
 if($_SERVER['REQUEST_METHOD'] == 'POST')
 {
   if ( isset($_POST['Refresh']) )
@@ -49,14 +50,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
   
 }
 
-
+/*
 function test_input($data) {
   $data = trim($data);
   $data = stripslashes($data);
   $data = htmlspecialchars($data);
   return $data;
 }
-
+*/
 ?>
 </body>
 </html>

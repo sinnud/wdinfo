@@ -8,4 +8,7 @@ import sys
 newfile="../php_utils/wddir_new.php"
 if os.path.exists(newfile):
     os.remove(newfile)
+newfile="../php_utils/wdsearch_new.php"
+if os.path.exists(newfile):
+    os.remove(newfile)
 print(f"Done! Please go back to the previous page...")

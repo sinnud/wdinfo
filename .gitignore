@@ -3,3 +3,7 @@
 #
 # temporary file
 php_utils/wddir_new.php
+php_utils/wdsearch_new.php
+
+# Bluefish backup file
+*~
