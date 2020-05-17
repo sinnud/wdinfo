@@ -17,7 +17,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
     <?php
     $message = exec("../scripts/wddir_remove_new.py 2>&1");
     print_r($message);
-  } elseif ( isset($_POST['submit']) )
+  } elseif ( isset($_POST['truncate']) )
   {
     $folder = test_input($_POST["folder"]);
     if(empty($folder)) {
@@ -25,7 +25,21 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
        return;
     }
     ?>
-    <h1>Analysize folder <?php echo $folder; ?> ...</h1><br><br>
+    <h1>Truncate MySQL table wdinfo.<?php echo $folder; ?> ...</h1><br><br>
+    <?php 
+    #$message = exec("../scripts/wddir_remove_new.py 2>&1");
+    $message="Hello World!";
+    print_r($message);
+
+  } elseif ( isset($_POST['Analize']) )
+  {
+    $folder = test_input($_POST["folder"]);
+    if(empty($folder)) {
+       print_r("Variable 'folder' is empty.<br>Go back!");
+       return;
+    }
+    ?>
+    <h1>Analize /mnt/<?php echo $folder; ?> into MySQL table wdinfo.<?php echo $folder; ?> ...</h1><br><br>
     <?php 
     #$message = exec("../scripts/wddir_remove_new.py 2>&1");
     $message="Hello World!";

@@ -21,7 +21,9 @@ echo "<script>alert('No WD directory list file!')</script>";
 <!--form action="./php_utils/wddir_refresh.php" method="post"-->
   <input type="submit" name="Refresh" value="Refresh">
   <input type="submit" name="GoDefault" value="GoDefault"><br><br>
-  <input type="submit" name="submit" value="submit">
+  <input type="submit" name="truncate" value="truncate"
+	 onclick="return confirm('Are you sure you want to truncate?')">
+  <input type="submit" name="Analize" value="Analyze">
 </form>
 
 </body>
