@@ -17,7 +17,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
     <?php
     $message = exec("../scripts/wddir_remove_new.py 2>&1");
     print_r($message);
-  } elseif ( isset($_POST['truncate']) )
+  } elseif ( isset($_POST['droptable']) )
   {
     $folder = test_input($_POST["folder"]);
     if(empty($folder)) {
@@ -25,13 +25,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
        return;
     }
     ?>
-    <h1>Truncate MySQL table wdinfo.<?php echo $folder; ?> ...</h1><br><br>
+    <h1>Drop MySQL table wdinfo.<?php echo $folder; ?> ...</h1><br><br>
     <?php 
-    #$message = exec("../scripts/wddir_remove_new.py 2>&1");
-    $message="Hello World!";
+    $message = exec("../scripts/wddir_drop.py $folder 2>&1");
+    #$message="Hello World!";
     print_r($message);
 
-  } elseif ( isset($_POST['Analize']) )
+  } elseif ( isset($_POST['Analyze']) )
   {
     $folder = test_input($_POST["folder"]);
     if(empty($folder)) {
@@ -41,8 +41,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
     ?>
     <h1>Analize /mnt/<?php echo $folder; ?> into MySQL table wdinfo.<?php echo $folder; ?> ...</h1><br><br>
     <?php 
-    #$message = exec("../scripts/wddir_remove_new.py 2>&1");
-    $message="Hello World!";
+    $message = exec("../scripts/wddir_analyze.py $folder 2>&1");
+    #$message="Hello World!";
     print_r($message);
 
   }
