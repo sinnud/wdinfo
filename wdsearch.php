@@ -10,14 +10,8 @@ Type phase you like to search, choose folder (table) you like to search from:<br
 Name: <input type="text" name="name">
 from: <select name="dir">
   <option value="">Select a folder:</option>
-  <!-- use dynamic setting instead
-  <option value="1">photos</option>
-  <option value="2">data</option>
-  <option value="3">music</option>
-  <option value="4">movie</option>
-  -->
   <?php
-  
+
    # default
 	$php_d = "php_utils/wdsearch_default.php";
 	# refresh

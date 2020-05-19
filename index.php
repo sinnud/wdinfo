@@ -21,7 +21,7 @@ function showRoot(str) {
     xmlhttp.send();
   }
 }
-  
+
     -->
     </script>
   </head>
@@ -32,8 +32,9 @@ function showRoot(str) {
  <?php include 'wdsearch.php';?>
  <hr>
  <?php
+ //include 'wdpicture.php';
 // hold for future
  //include 'wdshow.php';
 ?>
 </body>
-</html> 
+</html>
