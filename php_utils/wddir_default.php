@@ -8,3 +8,4 @@
 <input type="radio" name="folder" value="data">data
 <input type="radio" name="folder" value="music">music
 <input type="radio" name="folder" value="movie">movie
+<input type="radio" name="folder" value="public">public

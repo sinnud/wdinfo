@@ -6,7 +6,7 @@ In this module, you can:
 2. drop table in MySQL according to root folder
 3. analyze root folder to generate MySQL table of folder structure
 -->
-<h1>WD net drive 192.168.1.243 info: Re-Generate</h1>
+<h1>WD net drive 192.168.1.243/241 info: Re-Generate</h1>
   The directory structure information is stored in MySQL tables.<br>
   You can refresh table content by: drop the table, and analyze to generate the table.<br><br>
 <form action="./php_utils/wddir_main.php" method="post">

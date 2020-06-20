@@ -4,5 +4,5 @@
 // When ../scripts/wddir_refresh.py create wddir_new.php,
 // it will also create wdsearch_new.php accordingly 
 global $MySQLtableWD;
-$MySQLtableWD = array("photos", "data", "music", "movie");
+$MySQLtableWD = array("photos", "data", "music", "movie", "public");
 ?>
