@@ -224,6 +224,35 @@ class SyncMySQL(object):
             return False
         return True
 
+    ''' get new file list in 192.168.1.243 and in 241 from table in MySQL.wdinfo '''
+    def compare_new_file_in_243_not_241(self, mytable=None):
+        newfullpath=list()
+        qry=f"select a.fullpath from {mytable} a"
+        qry=f"{qry} left join public b"
+        qry=f"{qry} on a.fullpath=replace(b.fullpath, '/mnt/public/', '/mnt/')"
+        qry=f"{qry} where b.fullpath is null;"
+        status, rst=self.MySQL_exec(qry)
+        if not status:
+            return False, None
+        for idx, x in enumerate(rst, start=1):
+            newfullpath.append(x[0])
+        return True, newfullpath
+
+    ''' get different file list in 192.168.1.243 and in 241 from table in MySQL.wdinfo '''
+    def compare_diff_file_in_243_not_241(self, mytable=None):
+        newfullpath=list()
+        qry=f"select a.fullpath from {mytable} a"
+        qry=f"{qry} left join public b"
+        qry=f"{qry} on a.fullpath=replace(b.fullpath, '/mnt/public/', '/mnt/')"
+        qry=f"{qry} where a.filesize <> b.filesize;"
+        status, rst=self.MySQL_exec(qry)
+        if not status:
+            return False, None
+        for idx, x in enumerate(rst, start=1):
+            newfullpath.append(x[0])
+        return True, newfullpath
+        
+
 class DiskAccess(object):
     def file_info(self, thisfile=None):
         if not os.path.exists(thisfile):
@@ -318,13 +347,35 @@ def dir_sync(mydir=None):
             logger.error(f"Failed to update {rst}!!!")
             return False
     return True
+        
+def filelist_sync(filelist=None):
+    for thisfile in filelist:
+        status, rst=DiskAccess().file_info(thisfile=thisfile)
+        if status:
+            logger.info(f"The file {thisfile} record:{rst}")
+        else:
+            logger.error(f"Failed to call file_info")
+            return False
+        file241=thisfile.replace('/mnt/', '/mnt/public/')
+        if not DiskAccess().delete_if_exist(thisfile=file241):
+            logger.error(f"Failed to delete {file241}!!!")
+            return False
+        if not DiskAccess().copy_file(srcfile=thisfile, destfile=file241, ctime=rst[5]):
+            logger.error(f"Failed to copy {thisfile} to  {file241}!!!")
+            return False
 
-''' main function '''
-@log_dbg
-def main():
-    
-    mytable='data'
-    checkonly=False
+        status, rst=DiskAccess().file_info(thisfile=file241)
+        if status:
+            logger.info(f"The file {file241} record:{rst}")
+        else:
+            logger.error(f"Failed to call file_info")
+            return False
+        if not SyncMySQL().update_file_with_properties_241(properties=rst):
+            logger.error(f"Failed to update {rst}!!!")
+            return False
+    return True
+
+def wdsync_folder(mytable=None, checkonly=False):
     logger.info(f"test SyncMySQL().new_folder_in_243_not_241()...")
     status, dirlist=SyncMySQL().new_folder_in_243_not_241(roottable=mytable)
     if status:
@@ -352,14 +403,31 @@ def main():
         if not dir_sync(mydir=sqmydir):
             logger.error(f"Failed to sync {mydir}!!!")
             return False
+    return True
+
+''' main function '''
+@log_dbg
+def main():
     '''
-    mydir="/music/children/Harry Potter and the Sorcerer's Stone by J. K. Rowling"
-    sqmydir=mydir.replace("'","''")
-    logger.info(f"test sync {mydir}...")
-    if not dir_sync(mydir=sqmydir):
-        logger.error(f"Failed to sync {mydir}!!!")
+    wdsync_folder(mytable='data', checkonly=False)
+    wdsync_folder(mytable='photos', checkonly=False)
+    wdsync_folder(mytable='music', checkonly=False)
+    '''
+    mytbl= 'music' # 'data' # 'photos' #
+    logger.info(f"Get filelist from {mytbl}...")
+    # status, rst=SyncMySQL().compare_new_file_in_243_not_241(mytable=mytbl)
+    # if not status:
+    #     return False
+    # logger.info(f"There are {len(rst)} new files in {mytbl}.")
+    status, rst=SyncMySQL().compare_diff_file_in_243_not_241(mytable=mytbl)
+    if not status:
         return False
-    '''
+    logger.info(f"There are {len(rst)} differentfiles in {mytbl}.")
+    if len(rst)==0:
+        return True
+    status=filelist_sync(filelist=rst)
+    if not status:
+        logger.error(f"Failed to sync {mytbl} using filelist!!!s")
     return True
 
 if __name__ == '__main__':
@@ -369,4 +437,4 @@ if __name__ == '__main__':
     if not main():
         logger.error(f"Failed to call main")
         exit(1)
-    logger.info(f"Success running python code file {__file__}.")
+    logger.info(f"Success python code file {__file__}.")
