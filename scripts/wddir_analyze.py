@@ -7,7 +7,7 @@ import sys
 import logzero
 import traceback # Python error trace
 from logzero import logger
-import mysql.connector # test mysql connection
+import mysql.connector # test mysql connection, need pip install mysql-connector-python
 from mysql_con import MySqlConnect
 from mysql_con import Pandas2MySql
 import pandas as pd # import data through pandas to mysql

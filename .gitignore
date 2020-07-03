@@ -7,3 +7,9 @@ php_utils/wdsearch_new.php
 
 # Bluefish backup file
 *~
+
+# virturl env
+venv
+
+# python cache
+__pycache__

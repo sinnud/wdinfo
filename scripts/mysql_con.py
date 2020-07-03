@@ -44,7 +44,7 @@ class MySqlConnect(object):
         self.database=database
         self.conn = None
         self.allow_local_infile=allow_local_infile
-        logger.debug(f'======Connect to {host}.{database} using account {user}======')
+        # logger.debug(f'====== Connect to {host}.{database} using account {user} ======')
 
     def connect(self):
         self.conn = mysql.connector.connect(host=self.host
@@ -56,6 +56,7 @@ class MySqlConnect(object):
         self.conn.autocommit = True
         cursor = self.conn.cursor()
         cursor.execute(f'USE {self.database}')
+        logger.debug(f'====== Connect to {self.host}.{self.database} using account {self.user} ======')
 
     def cursor(self):
         if not self.conn: # or self.conn.closed:
@@ -91,6 +92,7 @@ class MySqlConnect(object):
 
     def close(self):
         #if not self.conn.closed:
+        logger.debug(f'====== Close {self.host}.{self.database} using account {self.user} ======')
         self.conn.close()
 
 def main():
