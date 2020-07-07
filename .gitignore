@@ -13,3 +13,6 @@ venv
 
 # python cache
 __pycache__
+
+# Python log file
+*.log
