@@ -71,12 +71,36 @@ class WdinfoUpdate(object):
         
         return True
 
+dirlist={'data243'   :'//192.168.1.243/data'
+         , 'photo243':'//192.168.1.243/photos'
+         , 'music243':'//192.168.1.243/music'
+         , 'movie243':'//192.168.1.243/movie'
+         , 'data241' :'//192.168.1.241/public/data'
+         , 'photo241':'//192.168.1.241/public/photos'
+         , 'music241':'//192.168.1.241/public/music'
+         , 'movie241':'//192.168.1.241/public/newmovies'
+        }
 
 def main(arg=None):
+    if arg is None:
+        for thisroot in dirlist.values():
+            if not WdinfoUpdate().wdinfoupd(thisroot=thisroot):
+                return False
+        return True
+
+    namelist=arg.split()
+    for name in namelist:
+        thisroot=dirlist.get(name)
+        if thisroot is None:
+            logger.debug(f"The name {name} is not valid!")
+            continue
+        if not WdinfoUpdate().wdinfoupd(thisroot=thisroot):
+            return False
     '''
     thisroot='//192.168.1.241/public/newmovies'
     if not WdinfoUpdate().wdinfoupd(thisroot=thisroot):
         return False
+    
     thisroot='//192.168.1.241/public/photos'
     if not WdinfoUpdate().wdinfoupd(thisroot=thisroot):
         return False
@@ -90,14 +114,15 @@ def main(arg=None):
     thisroot='//192.168.1.243/data'
     if not WdinfoUpdate().wdinfoupd(thisroot=thisroot):
         return False
+    
     thisroot='//192.168.1.243/photos'
     if not WdinfoUpdate().wdinfoupd(thisroot=thisroot):
         return False
-    '''
+    
     thisroot='//192.168.1.243/music'
     if not WdinfoUpdate().wdinfoupd(thisroot=thisroot):
         return False
-    '''
+    
     thisroot='//192.168.1.243/movie'
     if not WdinfoUpdate().wdinfoupd(thisroot=thisroot):
         return False
